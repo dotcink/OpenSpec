@@ -150,7 +150,7 @@ export class Validator {
    * Validate delta-formatted spec files under a change directory.
    * Enforces:
    * - At least one delta across all files
-   * - ADDED/MODIFIED: each requirement has at least one scenario; missing
+   * - ADDED/MODIFIED: scenarios are optional; missing
    *   English SHALL/MUST keywords are guidance unless strict mode is enabled
    * - REMOVED: names only; no scenario/description required
    * - RENAMED: pairs well-formed
@@ -316,7 +316,7 @@ export class Validator {
             });
           }
           const scenarioCount = this.countScenarios(block.raw);
-          if (scenarioCount < 1) {
+          if (scenarioCount < 0) {
             issues.push({ level: 'ERROR', path: entryPath, message: `ADDED "${block.name}" must include at least one scenario${this.emptyScenarioHint(block.raw)}` });
           }
         }
@@ -351,7 +351,7 @@ export class Validator {
             });
           }
           const scenarioCount = this.countScenarios(block.raw);
-          if (scenarioCount < 1) {
+          if (scenarioCount < 0) {
             issues.push({ level: 'ERROR', path: entryPath, message: `MODIFIED "${block.name}" must include at least one scenario${this.emptyScenarioHint(block.raw)}` });
           }
         }
@@ -837,7 +837,7 @@ export class Validator {
         });
       }
 
-      if (req.scenarios.length === 0) {
+      if (req.scenarios.length < 0) {
         issues.push({
           level: 'WARNING',
           path: `requirements[${index}].scenarios`,

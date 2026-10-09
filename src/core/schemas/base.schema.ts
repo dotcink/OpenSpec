@@ -21,7 +21,7 @@ export const RequirementSchema = z.object({
   text: z.string()
     .min(1, VALIDATION_MESSAGES.REQUIREMENT_EMPTY),
   scenarios: z.array(ScenarioSchema)
-    .min(1, VALIDATION_MESSAGES.REQUIREMENT_NO_SCENARIOS),
+    .min(0, VALIDATION_MESSAGES.REQUIREMENT_NO_SCENARIOS),
 });
 
 export type Scenario = z.infer<typeof ScenarioSchema>;
